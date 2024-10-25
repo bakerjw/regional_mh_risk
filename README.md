@@ -8,11 +8,6 @@ This package is divided by the hazard considered. The currently available hazard
 2. Coastal flooding
 3. Tsunami
 
-The risk analysis is performed on residential buildings, with the fragility functions built into each hazard. Additional files are contained as wrappers to perform the following:
-1. Pre-processing
-2. Simulations
-3. Post-processing
-
 To re-create the environment used for this project on anaconda: 
 conda env create -f environment.yml
 
