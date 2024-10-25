@@ -1,0 +1,13 @@
+# Ignore generated outputs/transfer files
+*.csv
+*.pkl
+*.eps
+*.pyc
+*.pdf
+# Ignore unnecessary geojson files
+/ReferencePolygons
+/__pycache__
+*.geojson
+!alameda_city.geojson
+*.pyc
+".json" 
