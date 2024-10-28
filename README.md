@@ -24,4 +24,4 @@ To run the example from start to finish, follow these steps:
 5. In parallel, adapt_raise.py, adapt_retreat.py, and adapt_retrofit.py* can all be run. 
 6. To postprocess the adaptations, run adapt_compare.py
 
-* These steps were run on remote clusters, and may be difficult to run on the whole dataset on a personal computer. 
+*These steps were run on remote clusters, and may be difficult to run on the whole dataset on a personal computer. 
