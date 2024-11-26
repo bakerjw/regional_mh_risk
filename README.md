@@ -21,6 +21,11 @@ python setup.py install
 
 
 To run the example from start to finish, follow these steps:
+First, some necessary downloads:
+Alameda_tsunami_tifs from the bottom of this webpage: https://www.conservation.ca.gov/cgs/tsunami/reports
+coastal_flood_rasters from this webpage: https://explorer.adaptingtorisingtides.org/download
+
+
 0. Setup the building inventory (filling tax assessor data with NSI data, using building_inventory.py)
 1. Run the earthquake ground motions: example/ground_motions/run_pypsha_clean.ipynb
 2. Run the liquefaction output*: setup_run.py and flex_liq_run.py (run using slurm_array.sh*), then earthquake_postprocess.py

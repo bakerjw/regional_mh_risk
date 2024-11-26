@@ -1,0 +1,20 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: regional_mh_risk
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Emily
+    family-names: Mongold
+    orcid: 'https://orcid.org/0000-0001-9374-7370'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.13994340
+repository-code: 'https://github.com/emongold/regional_mh_risk'
+license: MIT
+version: v1.0.1
+date-released: '2024-10-25'
