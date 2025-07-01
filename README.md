@@ -1,32 +1,106 @@
 # regional_mh_risk
 [![DOI](https://zenodo.org/badge/878637905.svg)](https://doi.org/10.5281/zenodo.13994340)
-This project contains python functions to run a regional multi-hazard risk assessment under climate change. This code recreates figures 
-from Mongold, E. and Baker, J.W. (Forthcoming). The building inventory values are set to the average for privacy, so some results may not 
-align exactly with the paper. 
 
-This package is divided by the hazard considered. The currently available hazards are:
-1. Earthquake (including liquefaction)
-2. Coastal flooding
-3. Tsunami
+This project contains Python functions to run a regional multi-hazard risk assessment under climate change. This code recreates figures
+from Mongold, E., and Baker, J. W. (2025). "Quantifying climate change risk through natural hazard losses to inform adaptation action."
+*Climatic Change*, 178(4), 82. https://doi.org/10.1007/s10584-025-03927-2
 
-To re-create the environment used for this project on anaconda: 
+The building inventory values are set to their average for privacy, so some results will not align exactly with those in the paper.
+
+## Overview
+
+This package implements a multi-hazard risk assessment framework that evaluates the impacts of climate change on regional building inventories. The methodology integrates:
+
+1. **Earthquake hazard** (including liquefaction susceptibility)
+2. **Coastal flooding** (with sea level rise scenarios)
+3. **Tsunami** inundation modeling
+
+The framework supports analysis of adaptation strategies including building elevation, retreat, and seismic retrofitting.
+
+## Installation
+
+### Environment Setup
+To re-create the conda environment used for this project:
+```bash
 conda env create -f environment.yml
+conda activate mh_env
+```
 
-To import the regional_mh_risk package, you should navigate to the folder /regional_mh_risk/ which contains setup.py, and in the conda environment, run:
+### Package Installation
+Navigate to the package directory and install:
+```bash
+cd regional_mh_risk/
 python setup.py install
+```
 
-To run the example from start to finish, follow these steps:
-First, some necessary downloads:
-Alameda_tsunami_tifs from the bottom of this webpage: https://www.conservation.ca.gov/cgs/tsunami/reports
-coastal_flood_rasters from this webpage: https://explorer.adaptingtorisingtides.org/download
+## Required Data Downloads
 
+Before running the analysis, download the following datasets:
 
-0. Setup the building inventory (filling tax assessor data with NSI data, using building_inventory.py)
-1. Run the earthquake ground motions: example/ground_motions/run_pypsha_clean.ipynb
-2. Run the liquefaction output*: setup_run.py and flex_liq_run.py (run using slurm_array.sh*), then earthquake_postprocess.py
-3. Run coastal flooding and tsunami hazards: cf_run.py and tsu_run.py
-4. Once all hazards are run, risk_run.py outputs many of the risk metric figures. 
-5. In parallel, adapt_raise.py, adapt_retreat.py, and adapt_retrofit.py* can all be run. 
-6. To postprocess the adaptations, run adapt_compare.py
+1. **Tsunami hazard data**: Alameda_tsunami_tifs from [CA Geological Survey](https://www.conservation.ca.gov/cgs/tsunami/reports)
+2. **Coastal flood data**: coastal_flood_rasters from [Adapting to Rising Tides](https://explorer.adaptingtorisingtides.org/download)
 
-*These steps were run on remote clusters, and may be difficult to run on the whole dataset on a personal computer. 
+## Workflow
+
+The complete analysis follows this sequential workflow:
+
+### 0. Building Inventory Setup
+```bash
+python example/building_inventory.py
+```
+Sets up building inventory by filling tax assessor data with NSI (National Structure Inventory) data.
+
+### 1. Earthquake Ground Motion Simulation
+```bash
+jupyter notebook example/ground_motions/run_pypsha_clean.ipynb
+```
+Generates probabilistic seismic hazard analysis using pypsha.
+
+### 2. Liquefaction Analysis*
+```bash
+python example/setup_run.py
+python example/flex_liq_run.py  # Or submit via slurm_array.sh for HPC
+python example/earthquake_postprocess.py
+```
+Computes liquefaction potential using Boulanger & Idriss or Moss methodologies.
+
+### 3. Coastal and Tsunami Hazards
+```bash
+python example/cf_run.py    # Coastal flooding
+python example/tsu_run.py   # Tsunami
+```
+
+### 4. Risk Assessment
+```bash
+python example/risk_run.py
+```
+Generates risk metric figures and loss calculations.
+
+### 5. Adaptation Analysis
+```bash
+python example/adapt_raise.py     # Building elevation strategy
+python example/adapt_retreat.py   # Managed retreat strategy  
+python example/adapt_retrofit.py* # Seismic retrofit strategy
+```
+These can be run in parallel after hazard analysis completion.
+
+### 6. Adaptation Comparison
+```bash
+python example/adapt_compare.py
+```
+Post-processes and compares adaptation strategies.
+
+*\*Computationally intensive steps designed for HPC clusters - may require significant resources for full dataset analysis.*
+
+## Computational Requirements
+
+- **Local execution**: Suitable for testing and small-scale analysis
+- **HPC execution**: Recommended for full dataset analysis, especially liquefaction modeling
+- **SLURM integration**: `slurm_array.sh` provided for cluster job submission
+- **Memory requirements**: 4GB+ per core for liquefaction calculations
+
+## Citation
+
+If you use this code, please cite:
+
+Mongold, E., and Baker, J. W. (2025). "Quantifying climate change risk through natural hazard losses to inform adaptation action." *Climatic Change*, 178(4), 82. https://doi.org/10.1007/s10584-025-03927-2
